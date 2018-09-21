@@ -1,0 +1,20 @@
+No.     Time           Source                Destination           Protocol Length Info
+      6 0.061524       192.168.0.1           192.168.0.127         DNS      149    Standard query response 0xa58b A www.ietf.org CNAME www.ietf.org.cdn.cloudflare.net A 104.20.1.85 A 104.20.0.85
+
+Frame 6: 149 bytes on wire (1192 bits), 149 bytes captured (1192 bits) on interface 0
+Ethernet II, Src: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d), Dst: Apple_42:b4:63 (8c:85:90:42:b4:63)
+Internet Protocol Version 4, Src: 192.168.0.1, Dst: 192.168.0.127
+    0100 .... = Version: 4
+    .... 0101 = Header Length: 20 bytes (5)
+    Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+    Total Length: 135
+    Identification: 0xadc8 (44488)
+    Flags: 0x4000, Don't fragment
+    Time to live: 50
+    Protocol: UDP (17)
+    Header checksum: 0x18cd [validation disabled]
+    [Header checksum status: Unverified]
+    Source: 192.168.0.1
+    Destination: 192.168.0.127
+User Datagram Protocol, Src Port: 53, Dst Port: 55323
+Domain Name System (response)

@@ -1,0 +1,20 @@
+No.     Time           Source                Destination           Protocol Length Info
+      3 0.000000       192.168.0.127         192.168.0.1           DNS      72     Standard query 0xa58b A www.ietf.org
+
+Frame 3: 72 bytes on wire (576 bits), 72 bytes captured (576 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d)
+Internet Protocol Version 4, Src: 192.168.0.127, Dst: 192.168.0.1
+    0100 .... = Version: 4
+    .... 0101 = Header Length: 20 bytes (5)
+    Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+    Total Length: 58
+    Identification: 0x922e (37422)
+    Flags: 0x0000
+    Time to live: 64
+    Protocol: UDP (17)
+    Header checksum: 0x66b4 [validation disabled]
+    [Header checksum status: Unverified]
+    Source: 192.168.0.127
+    Destination: 192.168.0.1
+User Datagram Protocol, Src Port: 55323, Dst Port: 53
+Domain Name System (query)

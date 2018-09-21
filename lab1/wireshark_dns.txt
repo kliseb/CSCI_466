@@ -1,0 +1,279 @@
+1. `nslookup www.baidu.com`: www.baidu.com has IP addresses 104.193.88.77 and 104.193.88.123.
+2. `nslookup -type=NS www.ucl.ac.uk`: University College London's authoritative DNS server is wwwr-02-188.gtm.ucl.ac.uk.
+3. I tried finding the IP of the mail server for Yahoo using multiple different authoritative DNS servers from different European universities and they all returned "** server can't find mail.yahoo.com: REFUSED". Instead, I tried `nslookup -type=MX mail.yahoo.com` using my default DNS server and found the IP address for the Yahoo mail server is 69.147.88.7.
+4. DNS query and response messages are sent over UDP.
+5. Destination port for DNS query message: 53. Source port for DNS response message: 53.
+6. DNS query message sent to 192.168.0.1. Local DNS server is also 192.168.0.1. These addresses are the same.
+7. The query type is a host address query, and the query does not contain any answers.
+8. The DNS query response contains 3 answers. These answers contain the CNAME and IP addresses for www.ietf.org, as well as other DNS information.
+9. The TCP packet destination is the same as the IP address in the DNS answer for www.ietf.org.
+10. My host does not issue new DNS queries before retrieving each image.
+
+*****DNS Query Packet*****
+No.     Time           Source                Destination           Protocol Length Info
+      3 0.000000       192.168.0.127         192.168.0.1           DNS      72     Standard query 0xa58b A www.ietf.org
+
+Frame 3: 72 bytes on wire (576 bits), 72 bytes captured (576 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d)
+######################Query Destination#################
+Internet Protocol Version 4, Src: 192.168.0.127, Dst: 192.168.0.1
+########################################################
+    0100 .... = Version: 4
+    .... 0101 = Header Length: 20 bytes (5)
+    Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+    Total Length: 58
+    Identification: 0x922e (37422)
+    Flags: 0x0000
+    Time to live: 64
+########################Protocol########################
+    Protocol: UDP (17)
+########################################################
+    Header checksum: 0x66b4 [validation disabled]
+    [Header checksum status: Unverified]
+    Source: 192.168.0.127
+    Destination: 192.168.0.1
+####################Destination Port####################
+User Datagram Protocol, Src Port: 55323, Dst Port: 53
+########################################################
+Domain Name System (query)
+
+*****DNS Response Packet*****
+No.     Time           Source                Destination           Protocol Length Info
+      6 0.061524       192.168.0.1           192.168.0.127         DNS      149    Standard query response 0xa58b A www.ietf.org CNAME www.ietf.org.cdn.cloudflare.net A 104.20.1.85 A 104.20.0.85
+
+Frame 6: 149 bytes on wire (1192 bits), 149 bytes captured (1192 bits) on interface 0
+Ethernet II, Src: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d), Dst: Apple_42:b4:63 (8c:85:90:42:b4:63)
+Internet Protocol Version 4, Src: 192.168.0.1, Dst: 192.168.0.127
+    0100 .... = Version: 4
+    .... 0101 = Header Length: 20 bytes (5)
+    Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+    Total Length: 135
+    Identification: 0xadc8 (44488)
+    Flags: 0x4000, Don't fragment
+    Time to live: 50
+    Protocol: UDP (17)
+    Header checksum: 0x18cd [validation disabled]
+    [Header checksum status: Unverified]
+    Source: 192.168.0.1
+    Destination: 192.168.0.127
+####################Source Port#########################
+User Datagram Protocol, Src Port: 53, Dst Port: 55323
+########################################################
+Domain Name System (response)
+
+11. Query destination port: 53, Response source port: 53
+12. Query message is sent to 192.168.0.1, which is the same as my default local DNS server.
+13. The DNS query is a host address (type=A) query. The message does not contain any answers.
+14. The DNS response contains 3 answers. These answers contain the address' CNAME, TTL, IP address, and other information.
+
+16. The query message is sent to 192.168.0.1, which is the same as my local DNS server.
+17. The query type is NS, and it does not contain any answers.
+18. The MIT nameservers provided by the response are asia2.akam.net, asia1.akam.net, use2.akam.net, eur5.akam.net, ns1-173.akam.net, ns1-37.akam.net, use5.akam.net, usw2.akam.net. It does not provide the IP addresses of the nameservers.
+
+*****mit.edu NS DNS Query*****
+No.     Time           Source                Destination           Protocol Length Info
+      2 0.000000       192.168.0.127         192.168.0.1           DNS      67     Standard query 0x2064 NS mit.edu
+
+Frame 2: 67 bytes on wire (536 bits), 67 bytes captured (536 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d)
+Internet Protocol Version 4, Src: 192.168.0.127, Dst: 192.168.0.1
+User Datagram Protocol, Src Port: 50192, Dst Port: 53
+Domain Name System (query)
+    Transaction ID: 0x2064
+    Flags: 0x0100 Standard query
+    Questions: 1
+    Answer RRs: 0
+    Authority RRs: 0
+    Additional RRs: 0
+    Queries
+        mit.edu: type NS, class IN
+            Name: mit.edu
+            [Name Length: 7]
+            [Label Count: 2]
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+    [Response In: 3]
+
+*****mit.edu NS DNS Response*****
+No.     Time           Source                Destination           Protocol Length Info
+      2 0.000000       192.168.0.127         192.168.0.1           DNS      67     Standard query 0x2064 NS mit.edu
+
+Frame 2: 67 bytes on wire (536 bits), 67 bytes captured (536 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d)
+Internet Protocol Version 4, Src: 192.168.0.127, Dst: 192.168.0.1
+User Datagram Protocol, Src Port: 50192, Dst Port: 53
+Domain Name System (query)
+    Transaction ID: 0x2064
+    Flags: 0x0100 Standard query
+    Questions: 1
+    Answer RRs: 0
+    Authority RRs: 0
+    Additional RRs: 0
+    Queries
+        mit.edu: type NS, class IN
+            Name: mit.edu
+            [Name Length: 7]
+            [Label Count: 2]
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+    [Response In: 3]
+
+No.     Time           Source                Destination           Protocol Length Info
+      3 0.254037       192.168.0.1           192.168.0.127         DNS      234    Standard query response 0x2064 NS mit.edu NS asia2.akam.net NS asia1.akam.net NS use2.akam.net NS eur5.akam.net NS ns1-173.akam.net NS ns1-37.akam.net NS use5.akam.net NS usw2.akam.net
+
+Frame 3: 234 bytes on wire (1872 bits), 234 bytes captured (1872 bits) on interface 0
+Ethernet II, Src: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d), Dst: Apple_42:b4:63 (8c:85:90:42:b4:63)
+Internet Protocol Version 4, Src: 192.168.0.1, Dst: 192.168.0.127
+User Datagram Protocol, Src Port: 53, Dst Port: 50192
+Domain Name System (response)
+    Transaction ID: 0x2064
+    Flags: 0x8180 Standard query response, No error
+    Questions: 1
+    Answer RRs: 8
+    Authority RRs: 0
+    Additional RRs: 0
+    Queries
+        mit.edu: type NS, class IN
+            Name: mit.edu
+            [Name Length: 7]
+            [Label Count: 2]
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+    Answers
+        mit.edu: type NS, class IN, ns asia2.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 16
+            Name Server: asia2.akam.net
+        mit.edu: type NS, class IN, ns asia1.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 8
+            Name Server: asia1.akam.net
+        mit.edu: type NS, class IN, ns use2.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 7
+            Name Server: use2.akam.net
+        mit.edu: type NS, class IN, ns eur5.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 7
+            Name Server: eur5.akam.net
+        mit.edu: type NS, class IN, ns ns1-173.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 10
+            Name Server: ns1-173.akam.net
+        mit.edu: type NS, class IN, ns ns1-37.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 9
+            Name Server: ns1-37.akam.net
+        mit.edu: type NS, class IN, ns use5.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 7
+            Name Server: use5.akam.net
+        mit.edu: type NS, class IN, ns usw2.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 7
+            Name Server: usw2.akam.net
+    [Request In: 2]
+    [Time: 0.254037000 seconds]
+
+No.     Time           Source                Destination           Protocol Length Info
+      8 1.249405       192.168.0.127         18.204.62.234         TLSv1.2  1171   Application Data
+
+Frame 8: 1171 bytes on wire (9368 bits), 1171 bytes captured (9368 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d)
+Internet Protocol Version 4, Src: 192.168.0.127, Dst: 18.204.62.234
+Transmission Control Protocol, Src Port: 52964, Dst Port: 443, Seq: 1, Ack: 1, Len: 1105
+Secure Sockets Layer
+
+No.     Time           Source                Destination           Protocol Length Info
+     10 0.184404       18.204.62.234         192.168.0.127         TLSv1.2  474    Application Data
+
+Frame 10: 474 bytes on wire (3792 bits), 474 bytes captured (3792 bits) on interface 0
+Ethernet II, Src: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d), Dst: Apple_42:b4:63 (8c:85:90:42:b4:63)
+Internet Protocol Version 4, Src: 18.204.62.234, Dst: 192.168.0.127
+Transmission Control Protocol, Src Port: 443, Dst Port: 52964, Seq: 1, Ack: 1106, Len: 408
+Secure Sockets Layer
+
+No.     Time           Source                Destination           Protocol Length Info
+     11 0.000074       192.168.0.127         18.204.62.234         TCP      66     52964 → 443 [ACK] Seq=1106 Ack=409 Win=4083 Len=0 TSval=1170802960 TSecr=353441016
+
+Frame 11: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d)
+Internet Protocol Version 4, Src: 192.168.0.127, Dst: 18.204.62.234
+Transmission Control Protocol, Src Port: 52964, Dst Port: 443, Seq: 1106, Ack: 409, Len: 0
+
+20. The DNS query message is sent to 95.101.36.64, which is not my local DNS. This DNS corresponds to the IP address of the MIT nameserver that we queried.
+21. The type of query is A (Host Address), and the message does not contain any answers.
+22. The query response does not contain any answers, because the query was refused.
+
+*****MIT DNS Query*****
+No.     Time           Source                Destination           Protocol Length Info
+      4 0.002655       192.168.0.127         95.101.36.64          DNS      74     Standard query 0xb263 A www.aiit.or.kr
+
+Frame 4: 74 bytes on wire (592 bits), 74 bytes captured (592 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d)
+Internet Protocol Version 4, Src: 192.168.0.127, Dst: 95.101.36.64
+User Datagram Protocol, Src Port: 51373, Dst Port: 53
+Domain Name System (query)
+    Transaction ID: 0xb263
+    Flags: 0x0100 Standard query
+    Questions: 1
+    Answer RRs: 0
+    Authority RRs: 0
+    Additional RRs: 0
+    Queries
+        www.aiit.or.kr: type A, class IN
+            Name: www.aiit.or.kr
+            [Name Length: 14]
+            [Label Count: 4]
+            Type: A (Host Address) (1)
+            Class: IN (0x0001)
+    [Response In: 5]
+
+*****MIT DNS Response*****
+No.     Time           Source                Destination           Protocol Length Info
+      5 0.246755       95.101.36.64          192.168.0.127         DNS      74     Standard query response 0xb263 Refused A www.aiit.or.kr
+
+Frame 5: 74 bytes on wire (592 bits), 74 bytes captured (592 bits) on interface 0
+Ethernet II, Src: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d), Dst: Apple_42:b4:63 (8c:85:90:42:b4:63)
+Internet Protocol Version 4, Src: 95.101.36.64, Dst: 192.168.0.127
+User Datagram Protocol, Src Port: 53, Dst Port: 51373
+Domain Name System (response)
+    Transaction ID: 0xb263
+    Flags: 0x8105 Standard query response, Refused
+    Questions: 1
+    Answer RRs: 0
+    Authority RRs: 0
+    Additional RRs: 0
+    Queries
+        www.aiit.or.kr: type A, class IN
+            Name: www.aiit.or.kr
+            [Name Length: 14]
+            [Label Count: 4]
+            Type: A (Host Address) (1)
+            Class: IN (0x0001)
+    [Request In: 4]
+    [Time: 0.246755000 seconds]

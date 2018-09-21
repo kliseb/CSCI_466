@@ -1,0 +1,23 @@
+No.     Time           Source                Destination           Protocol Length Info
+      5 0.246755       95.101.36.64          192.168.0.127         DNS      74     Standard query response 0xb263 Refused A www.aiit.or.kr
+
+Frame 5: 74 bytes on wire (592 bits), 74 bytes captured (592 bits) on interface 0
+Ethernet II, Src: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d), Dst: Apple_42:b4:63 (8c:85:90:42:b4:63)
+Internet Protocol Version 4, Src: 95.101.36.64, Dst: 192.168.0.127
+User Datagram Protocol, Src Port: 53, Dst Port: 51373
+Domain Name System (response)
+    Transaction ID: 0xb263
+    Flags: 0x8105 Standard query response, Refused
+    Questions: 1
+    Answer RRs: 0
+    Authority RRs: 0
+    Additional RRs: 0
+    Queries
+        www.aiit.or.kr: type A, class IN
+            Name: www.aiit.or.kr
+            [Name Length: 14]
+            [Label Count: 4]
+            Type: A (Host Address) (1)
+            Class: IN (0x0001)
+    [Request In: 4]
+    [Time: 0.246755000 seconds]

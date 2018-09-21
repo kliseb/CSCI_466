@@ -1,0 +1,129 @@
+No.     Time           Source                Destination           Protocol Length Info
+      2 0.000000       192.168.0.127         192.168.0.1           DNS      67     Standard query 0x2064 NS mit.edu
+
+Frame 2: 67 bytes on wire (536 bits), 67 bytes captured (536 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d)
+Internet Protocol Version 4, Src: 192.168.0.127, Dst: 192.168.0.1
+User Datagram Protocol, Src Port: 50192, Dst Port: 53
+Domain Name System (query)
+    Transaction ID: 0x2064
+    Flags: 0x0100 Standard query
+    Questions: 1
+    Answer RRs: 0
+    Authority RRs: 0
+    Additional RRs: 0
+    Queries
+        mit.edu: type NS, class IN
+            Name: mit.edu
+            [Name Length: 7]
+            [Label Count: 2]
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+    [Response In: 3]
+
+No.     Time           Source                Destination           Protocol Length Info
+      3 0.254037       192.168.0.1           192.168.0.127         DNS      234    Standard query response 0x2064 NS mit.edu NS asia2.akam.net NS asia1.akam.net NS use2.akam.net NS eur5.akam.net NS ns1-173.akam.net NS ns1-37.akam.net NS use5.akam.net NS usw2.akam.net
+
+Frame 3: 234 bytes on wire (1872 bits), 234 bytes captured (1872 bits) on interface 0
+Ethernet II, Src: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d), Dst: Apple_42:b4:63 (8c:85:90:42:b4:63)
+Internet Protocol Version 4, Src: 192.168.0.1, Dst: 192.168.0.127
+User Datagram Protocol, Src Port: 53, Dst Port: 50192
+Domain Name System (response)
+    Transaction ID: 0x2064
+    Flags: 0x8180 Standard query response, No error
+    Questions: 1
+    Answer RRs: 8
+    Authority RRs: 0
+    Additional RRs: 0
+    Queries
+        mit.edu: type NS, class IN
+            Name: mit.edu
+            [Name Length: 7]
+            [Label Count: 2]
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+    Answers
+        mit.edu: type NS, class IN, ns asia2.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 16
+            Name Server: asia2.akam.net
+        mit.edu: type NS, class IN, ns asia1.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 8
+            Name Server: asia1.akam.net
+        mit.edu: type NS, class IN, ns use2.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 7
+            Name Server: use2.akam.net
+        mit.edu: type NS, class IN, ns eur5.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 7
+            Name Server: eur5.akam.net
+        mit.edu: type NS, class IN, ns ns1-173.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 10
+            Name Server: ns1-173.akam.net
+        mit.edu: type NS, class IN, ns ns1-37.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 9
+            Name Server: ns1-37.akam.net
+        mit.edu: type NS, class IN, ns use5.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 7
+            Name Server: use5.akam.net
+        mit.edu: type NS, class IN, ns usw2.akam.net
+            Name: mit.edu
+            Type: NS (authoritative Name Server) (2)
+            Class: IN (0x0001)
+            Time to live: 1800
+            Data length: 7
+            Name Server: usw2.akam.net
+    [Request In: 2]
+    [Time: 0.254037000 seconds]
+
+No.     Time           Source                Destination           Protocol Length Info
+      8 1.249405       192.168.0.127         18.204.62.234         TLSv1.2  1171   Application Data
+
+Frame 8: 1171 bytes on wire (9368 bits), 1171 bytes captured (9368 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d)
+Internet Protocol Version 4, Src: 192.168.0.127, Dst: 18.204.62.234
+Transmission Control Protocol, Src Port: 52964, Dst Port: 443, Seq: 1, Ack: 1, Len: 1105
+Secure Sockets Layer
+
+No.     Time           Source                Destination           Protocol Length Info
+     10 0.184404       18.204.62.234         192.168.0.127         TLSv1.2  474    Application Data
+
+Frame 10: 474 bytes on wire (3792 bits), 474 bytes captured (3792 bits) on interface 0
+Ethernet II, Src: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d), Dst: Apple_42:b4:63 (8c:85:90:42:b4:63)
+Internet Protocol Version 4, Src: 18.204.62.234, Dst: 192.168.0.127
+Transmission Control Protocol, Src Port: 443, Dst Port: 52964, Seq: 1, Ack: 1106, Len: 408
+Secure Sockets Layer
+
+No.     Time           Source                Destination           Protocol Length Info
+     11 0.000074       192.168.0.127         18.204.62.234         TCP      66     52964 → 443 [ACK] Seq=1106 Ack=409 Win=4083 Len=0 TSval=1170802960 TSecr=353441016
+
+Frame 11: 66 bytes on wire (528 bits), 66 bytes captured (528 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Tp-LinkT_b8:72:2d (50:c7:bf:b8:72:2d)
+Internet Protocol Version 4, Src: 192.168.0.127, Dst: 18.204.62.234
+Transmission Control Protocol, Src Port: 52964, Dst Port: 443, Seq: 1106, Ack: 409, Len: 0
