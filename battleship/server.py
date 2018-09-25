@@ -1,10 +1,7 @@
 import argparse
-import json
-import socket
-
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from jinja2 import Template
 from urllib.parse import parse_qs, urlparse
+from jinja2 import Template
 
 ATTACKED = [[0 for i in range(10)] for i in range(10)]
 

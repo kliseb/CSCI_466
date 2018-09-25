@@ -1,6 +1,4 @@
 import argparse
-import json
-import socket
 import urllib3
 from urllib.parse import urlencode
 
