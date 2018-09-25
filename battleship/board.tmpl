@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <meta http-equiv="refresh" content="5">
+</head>
+<body>
+    <table layout="fixed">
+        <tr>
+            <th width="20px"></th>
+            <th width="10px" scope="col">0</th>
+            <th width="10px" scope="col">1</th>
+            <th width="10px" scope="col">2</th>
+            <th width="10px" scope="col">3</th>
+            <th width="10px" scope="col">4</th>
+            <th width="10px" scope="col">5</th>
+            <th width="10px" scope="col">6</th>
+            <th width="10px" scope="col">7</th>
+            <th width="10px" scope="col">8</th>
+            <th width="10px" scope="col">9</th>
+        </tr>
+        {% for row in board %}
+        <tr>
+            <td scope="row">{{ loop.index0 }}</td>
+            {% for col in row %}
+            <td>{{ col }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
