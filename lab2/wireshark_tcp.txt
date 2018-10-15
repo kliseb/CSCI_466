@@ -1,0 +1,114 @@
+Brandon Klise
+
+1. IP address of client using tcp-ethereal-trace-1: 192.168.1.102
+   Port of client using tcp-ethereal-trace-1: 1161
+
+2. IP address of gaia.cs.umass.edu: 128.119.245.12
+   Port of gaia.cs.umass.edu: 80
+
+3. IP address of my client: 10.200.49.15
+   Port of my client: 57209
+
+++++++++++
+http post
+----------
+No.     Time           Source                Destination           Protocol Length Info
+    162 0.000000       10.200.49.15          128.119.245.12        HTTP     1045   POST /wireshark-labs/lab3-1-reply.htm HTTP/1.1  (text/plain)
+
+Frame 162: 1045 bytes on wire (8360 bits), 1045 bytes captured (8360 bits) on interface 0
+Ethernet II, Src: Apple_42:b4:63 (8c:85:90:42:b4:63), Dst: Cisco_9f:f2:56 (00:00:0c:9f:f2:56)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Internet Protocol Version 4, Src: 10.200.49.15, Dst: 128.119.245.12 | // source and destination IP addresses
+---------------------------------------------------------------------
+Transmission Control Protocol, Src Port: 57209, Dst Port: 80, Seq: 148412, Ack: 1, Len: 979
+++++++++++++++++++++++++++
+    Source Port: 57209   | // source port
+    Destination Port: 80 | // destination port
+--------------------------
+    [Stream index: 0]
+    [TCP Segment Len: 979]
+    Sequence number: 148412    (relative sequence number)
+    [Next sequence number: 149391    (relative sequence number)]
+    Acknowledgment number: 1    (relative ack number)
+    1000 .... = Header Length: 32 bytes (8)
+    Flags: 0x018 (PSH, ACK)
+    Window size value: 4104
+    [Calculated window size: 4104]
+    [Window size scaling factor: -1 (unknown)]
+    Checksum: 0xbfdd [unverified]
+    [Checksum Status: Unverified]
+    Urgent pointer: 0
+    Options: (12 bytes), No-Operation (NOP), No-Operation (NOP), Timestamps
+    [SEQ/ACK analysis]
+    [Timestamps]
+    TCP payload (979 bytes)
+    TCP segment data (979 bytes)
+[110 Reassembled TCP Segments (149390 bytes): #1(667), #2(1368), #3(1368), #6(1368), #7(1368), #8(1368), #10(1368), #11(1368), #14(1368), #15(1368), #16(1368), #17(1368), #18(1368), #19(1368), #21(1368), #22(1368), #23(1368), #24(1368), #29]
+Hypertext Transfer Protocol
+MIME Multipart Media Encapsulation, Type: multipart/form-data, Boundary: "----WebKitFormBoundaryaBCgVSersL3VYqCf"
+
+4. Sequence number of the TCP SYN segment that is used to initiate the TCP connection between the client computer and gaia.cs.umass.edu: 0
+   The SYN flag (bit 1 of flags) is set to 1, and no other bits are set. This identifies the segment as a SYN segment
+
+5. Sequence number of the SYNACK segment sent by gaia.cs.umass.edu to the client computer in reply to the SYN: 883061785
+   Value of the Acknowledgement field in the SYNACK segment: 232129013
+   The SYN flag (bit 1 of flags) and the ACK flag (bit 4 of flags) are both set, which tells us that this segment is a SYNACK segment.
+
+6. Sequence number of the TCP segment containing the HTTP POST command: 232129013
+
+7. Sequence number of segment 1: 232129013
+   Sequence number of segment 2: 232129578
+   Sequence number of segment 3: 232131038
+   Sequence number of segment 4: 232132498
+   Sequence number of segment 5: 232133958
+   Sequence number of segment 6: 232135418
+
+   Segment 1 sent at: Aug 21, 2004 07:44:20.596858000 MDT
+   Segment 2 sent at: Aug 21, 2004 07:44:20.612118000 MDT
+   Segment 3 sent at: Aug 21, 2004 07:44:20.624407000 MDT
+   Segment 4 sent at: Aug 21, 2004 07:44:20.625071000 MDT
+   Segment 5 sent at: Aug 21, 2004 07:44:20.647786000 MDT
+   Segment 6 sent at: Aug 21, 2004 07:44:20.648538000 MDT
+
+   Segment 1 ACK received at: Aug 21, 2004 07:44:20.624318000 MDT
+   Segment 2 ACK received at: Aug 21, 2004 07:44:20.647675000 MDT
+   Segment 3 ACK received at: Aug 21, 2004 07:44:20.694466000 MDT
+   Segment 4 ACK received at: Aug 21, 2004 07:44:20.739499000 MDT
+   Segment 5 ACK received at: Aug 21, 2004 07:44:20.787680000 MDT
+   Segment 6 ACK received at: Aug 21, 2004 07:44:20.838183000 MDT
+
+   Segment 1 RTT: 27.46ms
+   Segment 2 RTT: 35.557ms
+   Segment 3 RTT: 70.059ms
+   Segment 4 RTT: 114.428ms
+   Segment 5 RTT: 139.894ms
+   Segment 6 RTT: 189.645ms
+
+   Estimated RTT after ACK 1: 27.46ms
+   Estimated RTT after ACK 2: 28.472ms
+   Estimated RTT after ACK 3: 33.67ms
+   Estimated RTT after ACK 4: 43.765ms
+   Estimated RTT after ACK 5: 55.781ms
+   Estimated RTT after ACK 6: 72.514ms
+
+8. Length of segment 1: 565
+   Length of segment 2: 1460
+   Length of segment 3: 1460
+   Length of segment 4: 1460
+   Length of segment 5: 1460
+   Length of segment 6: 1460
+
+9. Minimum amount of available buffer space advertised at the received for the entire trace: window size = 5840 bytes
+   The buffer space keeps increasing until it reaches 62780 bytes. Once, it reaches 62780 bytes, the sender is throttled.
+
+10. The sequence numbers of each packet continually increase, so no packets were retransmitted.
+
+11. The receiver typically ACKs 1460 bytes. Once the receiver buffer size reaches 62780 bytes, the receiver sometimes ACKs every other segment.
+
+12. The throughput for the TCP connection is around 225000 bits/s, which I found by looking at the throughput graph.
+
+13. The slowstart phase begins when the first packet is sent and ends when the 13th packet is sent. Then, congestion control begins at packet 18. Unlike idealized TCP, the sender doesn't wait to receive an ACK before sending the next packet, and the receiver cannot send an ACK immediately when it receives the packet. Also, the throughput of the actual case varies, unlike that of ideal TCP.
+
+14. The slowstart phase begins with packet 1 and ends with packet 3. Congestion control never really begins because the buffer size continually increases. The throughput for my TCP trace is much closer to ideal, and is increasing at an almost steady rate.
+
+15. Using `sysctl -a | grep tcp` lists a bunch of TCP options, but I'm not sure which implementation is being used because it lists multiple values that include cubic, reno, and sack.
