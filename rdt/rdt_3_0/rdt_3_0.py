@@ -1,6 +1,6 @@
-import network
+import network_3_0 as network
 import argparse
-from time import sleep
+from time import sleep, time
 import hashlib
 
 
@@ -88,20 +88,181 @@ class RDT:
             #remove the packet bytes from the buffer
             self.byte_buffer = self.byte_buffer[length:]
             #if this was the last packet, will return on the next iteration
-            
-    
+
     def rdt_2_1_send(self, msg_S):
-        pass
-        
+        p = Packet(self.seq_num, msg_S)
+        while True:
+            self.network.udt_send(p.get_byte_S())
+            self.byte_buffer = ''
+            resp = ''
+            while resp == '':
+                resp = self.network.udt_receive()
+
+            self.byte_buffer = resp
+            length = int(self.byte_buffer[:Packet.length_S_length])
+            if Packet.corrupt(self.byte_buffer[:length]):
+                print('Send: Packet is corrupt')
+                self.byte_buffer = self.byte_buffer[length:]
+                continue
+
+            resp_p = Packet.from_byte_S(self.byte_buffer[:length])
+            if resp_p.msg_S == 'NAK':
+                self.byte_buffer = self.byte_buffer[length:]
+                continue
+            self.seq_num += 1
+            self.byte_buffer = self.byte_buffer[length:]
+            break
+ 
     def rdt_2_1_receive(self):
-        pass
-    
+        self.byte_buffer = ''
+        ret_S = None
+        byte_S = self.network.udt_receive()
+        self.byte_buffer += byte_S
+        while True:
+            if len(self.byte_buffer) < Packet.length_S_length:
+                return ret_S
+            length = int(self.byte_buffer[:Packet.length_S_length])
+            if len(self.byte_buffer) < length:
+                return ret_S
+
+            send_p = None
+            if Packet.corrupt(self.byte_buffer):
+                print('Receive: Packet is corrupt')
+                send_p = Packet(self.seq_num, 'NAK')
+            else:
+                send_p = Packet(self.seq_num, 'ACK')
+                self.seq_num += 1
+                rec_p = Packet.from_byte_S(self.byte_buffer[:length])
+                ret_S = rec_p.msg_S if (ret_S is None) else ret_S + rec_p.msg_S
+
+            self.network.udt_send(send_p.get_byte_S())
+            sleep(.5)
+            length = int(self.byte_buffer[:Packet.length_S_length])
+            self.byte_buffer = self.byte_buffer[length:]
+
     def rdt_3_0_send(self, msg_S):
-        pass
-        
+        p = Packet(self.seq_num, msg_S)
+        while True:
+            self.network.udt_send(p.get_byte_S())
+            self.byte_buffer = ''
+            resp = ''
+            timeout = time() + 0.5
+            while resp == '' and time() <= timeout:
+                resp = self.network.udt_receive()
+
+            if resp == '':
+                print('Timeout')
+                continue
+
+            self.byte_buffer = resp
+            length = int(self.byte_buffer[:Packet.length_S_length])
+            if Packet.corrupt(self.byte_buffer[:length]):
+                print('Send: Packet is corrupt')
+                self.byte_buffer = self.byte_buffer[length:]
+                continue
+
+            resp_p = Packet.from_byte_S(self.byte_buffer[:length])
+            if resp_p.msg_S == 'NAK':
+                self.byte_buffer = self.byte_buffer[length:]
+                continue
+            self.seq_num += 1
+            self.byte_buffer = self.byte_buffer[length:]
+            break
+ 
     def rdt_3_0_receive(self):
-        pass
-        
+        self.byte_buffer = ''
+        ret_S = None
+        byte_S = self.network.udt_receive()
+        self.byte_buffer += byte_S
+        while True:
+            if len(self.byte_buffer) < Packet.length_S_length:
+                return ret_S
+            length = int(self.byte_buffer[:Packet.length_S_length])
+            if len(self.byte_buffer) < length:
+                return ret_S
+
+            send_p = None
+            if Packet.corrupt(self.byte_buffer):
+                print('Receive: Packet is corrupt')
+                send_p = Packet(self.seq_num, 'NAK')
+            else:
+                rec_p = Packet.from_byte_S(self.byte_buffer[:length])
+                if rec_p.msg_S in ['ACK', 'NAK']:
+                    self.byte_buffer = self.byte_buffer[length:]
+                    continue
+                elif rec_p.seq_num < self.seq_num:
+                    send_p = Packet(rec_p.seq_num, 'ACK')
+                elif rec_p.seq_num == self.seq_num:
+                    send_p = Packet(self.seq_num, 'ACK')
+                    self.seq_num += 1
+                ret_S = rec_p.msg_S if (ret_S is None) else ret_S + rec_p.msg_S
+
+            self.network.udt_send(send_p.get_byte_S())
+            self.byte_buffer = self.byte_buffer[length:]
+
+#    def rdt_3_0_send(self, msg_S):
+#        p = Packet(self.seq_num, msg_S)
+#        keep_looping = True
+#        while keep_looping:
+#            self.network.udt_send(p.get_byte_S())
+#            resp = ''
+#            timeout = time() + 3
+#            while resp == '' and time() < timeout:
+#                resp = self.network.udt_receive()
+#
+#            if resp == '':
+#                print('Timeout')
+#            else:
+#                length = int(resp[:Packet.length_S_length])
+#                self.byte_buffer = resp[:length]
+#                if Packet.corrupt(self.byte_buffer[:length]):
+#                    print('Send: Packet is corrupt')
+#                    self.byte_buffer = ''
+#
+#                else:
+#                    resp_p = Packet.from_byte_S(self.byte_buffer[:length])
+#                    if resp_p.seq_num < self.seq_num:
+#                        print('Receiver seq_num lower than our seq_num')
+#                        send_p = Packet(resp_p.seq_num, 'ACK')
+#                        self.network.udt_send(send_p.get_byte_S())
+#                    elif resp_p.msg_S == 'NAK':
+#                        print('\nreceived a NAK\n')
+#                        self.byte_buffer = ''
+#                    elif resp_p.msg_S == 'ACK':
+#                        keep_looping = False
+#
+#        self.seq_num += 1
+#        
+#    def rdt_3_0_receive(self):
+#        self.byte_buffer = ''
+#        ret_S = None
+#        byte_S = self.network.udt_receive()
+#        self.byte_buffer += byte_S
+#        while True:
+#            if len(self.byte_buffer) < Packet.length_S_length:
+#                return ret_S
+#            length = int(self.byte_buffer[:Packet.length_S_length])
+#            if len(self.byte_buffer) < length:
+#                return ret_S
+#
+#            send_p = None
+#            if Packet.corrupt(self.byte_buffer):
+#                print('Receive: Packet is corrupt')
+#                send_p = Packet(self.seq_num, 'NAK')
+#            else:
+#                rec_p = Packet.from_byte_S(self.byte_buffer[:length])
+#                if rec_p.msg_S in ['ACK', 'NAK']:
+#                    self.byte_buffer = self.byte_buffer[length:]
+#                    continue
+#                if rec_p.seq_num < self.seq_num:
+#                    send_p = Packet(rec_p.seq_num, 'ACK')
+#                else:
+#                    send_p = Packet(self.seq_num, 'ACK')
+#                    self.seq_num += 1
+#                ret_S = rec_p.msg_S if (ret_S is None) else ret_S + rec_p.msg_S
+#
+#            self.network.udt_send(send_p.get_byte_S())
+#            self.byte_buffer = self.byte_buffer[length:]
 
 if __name__ == '__main__':
     parser =  argparse.ArgumentParser(description='RDT implementation.')

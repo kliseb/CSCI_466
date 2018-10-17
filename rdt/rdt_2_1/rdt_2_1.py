@@ -103,6 +103,7 @@ class RDT:
             if Packet.corrupt(self.byte_buffer[:length]):
                 print('Send: Packet is corrupt')
                 self.byte_buffer = self.byte_buffer[length:]
+                send_p = Packet(self.seq_num, 'NAK')
                 continue
 
             resp_p = Packet.from_byte_S(self.byte_buffer[:length])

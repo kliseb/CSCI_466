@@ -3,14 +3,14 @@ import socket
 import threading
 from time import sleep
 import random
-import rdt
+import rdt_3_0 as rdt
 
 
 
 ## Provides an abstraction for the network layer
 class NetworkLayer:
     #configuration parameters
-    prob_pkt_loss = 0
+    prob_pkt_loss = 0.2
     prob_byte_corr = 0
     prob_pkt_reorder = 0
     
