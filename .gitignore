@@ -1,2 +1,4 @@
 Networks.pdf
 *.mov
+__pycache__
+*.pyc
